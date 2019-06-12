@@ -80,8 +80,35 @@ class WPWA_User_Manager {
     */
 
     public function add_application_user_capabilities() {
+        // For follower
         $role = get_role( 'follower' );
         $role->add_cap( 'follow_developer_activities' );
+
+        // For developer
+        $developer = get_role( 'developer' );
+        $custom_developer_capabilities = [
+            'edit_posts',
+            'edit_private_posts',
+            'edit_published_posts',
+            'publish_posts',
+            'read',
+            'delete_posts',
+        ];
+        foreach( $custom_developer_capabilities as $capability ) {
+            $developer->add_cap( $capability );
+        }
+
+        // For Administrator
+        $admin = get_role( 'administrator' );
+        $custom_admin_capabilities = [
+            'manage_project_type',
+            'edit_project_type',
+            'delete_project_type',
+            'assign_project_type'
+        ];
+        foreach( $custom_admin_capabilities as $capability ) {
+            $admin->add_cap( $capability );
+        }
     }
 
     /*
